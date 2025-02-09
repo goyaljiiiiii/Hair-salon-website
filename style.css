@@ -1,0 +1,428 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+
+/* ============= Logo ============= */
+.logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: radial-gradient(#edd1e7, black);
+    border-right: 2rem solid black;
+    border-left: 2rem solid black;
+    border-bottom: 2rem solid black;
+    animation: fadeIn 1.5s ease-in-out;
+}
+
+.circle {
+    border: 5px solid purple;
+    border-radius: 50%;
+    padding: 1rem;
+    outline: 5px solid black;
+    outline-offset: 1rem;
+    margin: 4rem 0;
+    transition: all 0.3s ease-in-out;
+}
+
+/* Hover Effect for Logo */
+.circle:hover {
+    transform: rotate(360deg) scale(1.1);
+    outline-offset: 1.5rem;
+    border-color: black;
+}
+
+/* ============= Navigation ============= */
+nav {
+    background-color: black;
+    padding: 0.8rem;
+    position: sticky;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    transition: all 0.3s ease-in-out;
+}
+
+/* Floating Effect on Hover */
+nav ul {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    width: 50%;
+    margin: 0 auto;
+}
+
+nav li {
+    list-style: none;
+    font-size: 1.4rem;
+    border-radius: 50%;
+    padding: 1rem;
+    color: white;
+    cursor: pointer;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+/* Interactive Hover */
+nav li:hover {
+    box-shadow: 0px 0px 16px white;
+    outline: 3px solid purple;
+    opacity: 0.8;
+    transform: scale(1.1);
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+}
+
+/* ============= Hero Section ============= */
+.home {
+    position: relative;
+    background-image: url("bg.jpeg");
+    width: 100%;
+    color: white;
+    height: 80svh;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    border: 1rem solid black;
+    animation: fadeIn 1s ease-in-out;
+}
+
+/* Parallax Background Effect */
+.home::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    transition: background 0.3s ease-in-out;
+}
+
+/* Text Centered */
+.home-text {
+    position: relative;
+    color: white;
+    height: 80svh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+/* Slight Hover Glow */
+.home:hover::before {
+    background: rgba(0, 0, 0, 0.3);
+}
+
+/* ============= About Section ============= */
+.about-grid {
+    display: flex;
+    gap: 1rem;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    background-color: black;
+    animation: fadeIn 1.2s ease-in-out;
+}
+
+/* Ensures images take equal space */
+.about-item {
+    position: relative;
+    width: 33.33%;
+    overflow: hidden;
+}
+
+/* Image Animation */
+.about-item img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 10px;
+    transition: transform 0.5s ease-in-out, filter 0.5s ease-in-out;
+    height: 50rem;
+    filter: brightness(0.8);
+}
+
+/* Zoom-in effect on hover */
+.about-item:hover img {
+    transform: scale(1.1);
+    filter: brightness(1);
+}
+
+/* Fancy Border on Hover */
+.about-item:hover {
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.6);
+    border-radius: 10px;
+}
+
+/* Text Overlay Animation */
+.text-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    background: rgba(0, 0, 0, 0.6);
+    padding: 1rem;
+    text-align: center;
+    border-radius: 5px;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+    transform: translate(-50%, -40%);
+}
+
+/* Make text visible on hover */
+.about-item:hover .text-overlay {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+}
+
+/* Fade-in Animation */
+.about-item {
+    animation: fadeIn 1s ease-in-out forwards;
+    opacity: 0;
+}
+
+/* ============= Buttons ============= */
+button {
+    padding: 10px 20px;
+    background: purple;
+    color: white;
+    border: none;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    border-radius: 5px;
+}
+
+/* Glow Effect on Hover */
+button:hover {
+    box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.8);
+    transform: scale(1.1);
+}
+
+/* ============= Animations ============= */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ============= Scroll Effect ============= */
+.scroll-reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.scroll-reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+
+/* ============= Testimonials Section ============= */
+.testimonials {
+    background: radial-gradient(circle, #3b023b, black);
+    color: white;
+    padding: 50px 20px;
+    text-align: center;
+    height: 90svh;
+    padding: 10rem;
+    border: 2rem solid black;
+}
+
+.testimonials h2 {
+    font-size: 2rem;
+    margin-bottom: 10rem;
+}
+
+.testimonial-item {
+    max-width: 30rem;
+    margin: 1.5rem auto;
+    margin-bottom: 5rem;
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    font-style: italic;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+    transition: transform 0.3s ease-in-out;
+}
+
+
+.testimonial-item:hover {
+    transform: translateY(-5px);
+}
+
+/* ============= Team Section ============= */
+.team {
+    text-align: center;
+    padding: 50px 20px;
+    background: black;
+    color: white;
+    border: 2rem solid black;
+}
+
+.team h2 {
+    margin-bottom: 5rem;
+}
+
+.team-grid {
+    display: flex;
+    justify-content: center;
+    gap: 4rem;
+    margin-top: 3rem;
+    flex-wrap: wrap;
+}
+
+.team-member {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+    text-align: center;
+    max-width: 250px;
+    transition: transform 0.3s ease-in-out;
+}
+
+.team-member:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 25px rgba(255, 255, 255, 0.5);
+}
+
+.team-member img {
+    width: 100%;
+    border-radius: 50%;
+    height: 200px;
+    object-fit: cover;
+}
+
+/* ============= Booking Section ============= */
+.booking {
+    background: linear-gradient(to bottom, black, #3b023b);
+    padding: 50px 20px;
+    text-align: center;
+    color: white;
+    padding: 8rem;
+    height: 80svh;
+    border: 2rem solid black;
+}
+
+.booking form {
+    display: flex;
+    flex-direction: column;
+    max-width: 300px;
+    margin: auto;
+}
+
+.booking input,
+.booking button {
+    padding: 0.8rem;
+    margin: 1rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+.booking button {
+    background-color: purple;
+    border: none;
+    margin-top: 3rem;
+    cursor: pointer;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.booking button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+}
+
+/* ============= FAQ Section ============= */
+.faq {
+    background: black;
+    color: white;
+    padding: 4rem 2rem;
+    height: 80svh;
+    border: 2rem solid black;
+    text-align: center;
+    animation: fadeIn 1s ease-in-out;
+}
+
+.faq h2 {
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 7rem;
+}
+
+.faq-item {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 1.5rem;
+    border-radius: 10px;
+    margin-bottom: 1.5rem;
+    transition: all 0.3s ease-in-out;
+}
+
+.faq-item h3 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    cursor: pointer;
+    position: relative;
+}
+
+.faq-item h3::before {
+    content: "+";
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin-right: 10px;
+    color: purple;
+    transition: transform 0.3s ease-in-out;
+}
+
+.faq-item.active h3::before {
+    content: "-";
+    transform: rotate(180deg);
+}
+
+.faq-item p {
+    font-size: 1.2rem;
+    display: none;
+    margin-top: 0.5rem;
+    line-height: 1.5;
+}
+
+.faq-item:hover p {
+    display: block;
+}
+
+/* Hover effect */
+.faq-item:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.02);
+}
+
+
+/* ============= Footer ============= */
+footer {
+    background: #222;
+    color: white;
+    text-align: center;
+    padding: 15px;
+    font-size: 14px;
+    border-top: 2rem solid black;
+}
