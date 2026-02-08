@@ -115,10 +115,11 @@
         <section id="booking" class="booking">
             <h2>Book Your Appointment</h2>
             <p>Secure your spot with our expert stylists today.</p>
-            <form>
-                <input type="text" placeholder="Your Full Name" required>
-                <input type="email" placeholder="Your Email Address" required>
-                <input type="date" required>
+            <form action="https://formspree.io/f/mykdzgln" method="POST">
+                <input type="text" name="name" placeholder="Your Full Name" required>
+                <input type="email" name="email" placeholder="Your Email Address" required>
+                <input type="date" name="date" required>
+                <input type="hidden" name="_subject" value="New Booking Request">
                 <button type="submit">Book Now</button>
             </form>
         </section>
@@ -145,22 +146,7 @@
             <p>&copy; 2024 Creative Inc. | Expert Hair Styling & Care | All Rights Reserved.</p>
         </footer>
 
-        <script>
-            const navToggle = document.querySelector(".nav-toggle");
-            const navList = document.querySelector("nav ul");
-
-            navToggle.addEventListener("click", () => {
-                const isOpen = navList.classList.toggle("is-open");
-                navToggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
-            });
-
-            navList.addEventListener("click", (event) => {
-                if (event.target.tagName === "A" && navList.classList.contains("is-open")) {
-                    navList.classList.remove("is-open");
-                    navToggle.setAttribute("aria-expanded", "false");
-                }
-            });
-        </script>
+        <script src="assets/js/main.js"></script>
 
     </body>
 
