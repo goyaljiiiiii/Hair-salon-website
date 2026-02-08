@@ -18,19 +18,22 @@
 }
 
 .circle {
-    border: 5px solid purple;
+    width: 220px;
+    height: 220px;
+    object-fit: cover;
+    border: 4px solid purple;
     border-radius: 50%;
-    padding: 1rem;
-    outline: 5px solid black;
-    outline-offset: 1rem;
+    padding: 0.75rem;
+    outline: 4px solid black;
+    outline-offset: 0.6rem;
     margin: 4rem 0;
     transition: all 0.3s ease-in-out;
 }
 
 /* Hover Effect for Logo */
 .circle:hover {
-    transform: rotate(360deg) scale(1.1);
-    outline-offset: 1.5rem;
+    transform: scale(1.05);
+    outline-offset: 0.8rem;
     border-color: black;
 }
 
@@ -43,6 +46,8 @@ nav {
     width: 100%;
     z-index: 1000;
     transition: all 0.3s ease-in-out;
+    display: flex;
+    justify-content: center;
 }
 
 /* Floating Effect on Hover */
@@ -53,13 +58,36 @@ nav ul {
     padding: 1rem;
     width: 50%;
     margin: 0 auto;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.nav-toggle {
+    display: none;
+    margin-left: auto;
+    margin-right: 1rem;
+    background: transparent;
+    border: 2px solid white;
+    border-radius: 8px;
+    width: 44px;
+    height: 38px;
+    padding: 6px;
+    cursor: pointer;
+}
+
+.nav-toggle span {
+    display: block;
+    height: 2px;
+    background: white;
+    margin: 6px 0;
+    transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
 nav li {
     list-style: none;
     font-size: 1.4rem;
-    border-radius: 50%;
-    padding: 1rem;
+    border-radius: 999px;
+    padding: 0.6rem 1rem;
     color: white;
     cursor: pointer;
     transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
@@ -68,9 +96,9 @@ nav li {
 /* Interactive Hover */
 nav li:hover {
     box-shadow: 0px 0px 16px white;
-    outline: 3px solid purple;
+    outline: 2px solid purple;
     opacity: 0.8;
-    transform: scale(1.1);
+    transform: translateY(-2px);
 }
 
 nav a {
@@ -81,10 +109,12 @@ nav a {
 /* ============= Hero Section ============= */
 .home {
     position: relative;
-    background-image: url("bg.jpeg");
+    background-image: url("../images/bg.jpeg");
     width: 100%;
     color: white;
-    height: 80svh;
+    height: 100vh;
+    min-height: 100vh;
+    min-height: 100dvh;
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -108,7 +138,9 @@ nav a {
 .home-text {
     position: relative;
     color: white;
-    height: 80svh;
+    height: 100vh;
+    min-height: 100vh;
+    min-height: 100dvh;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -130,12 +162,14 @@ nav a {
     padding-bottom: 2rem;
     background-color: black;
     animation: fadeIn 1.2s ease-in-out;
+    flex-wrap: wrap;
 }
 
 /* Ensures images take equal space */
 .about-item {
     position: relative;
-    width: 33.33%;
+    flex: 1 1 calc(33.333% - 0.75rem);
+    max-width: calc(33.333% - 0.75rem);
     overflow: hidden;
 }
 
@@ -240,8 +274,8 @@ button:hover {
     color: white;
     padding: 50px 20px;
     text-align: center;
-    height: 90svh;
-    padding: 10rem;
+    height: auto;
+    padding: 6rem 2rem;
     border: 2rem solid black;
 }
 
@@ -316,8 +350,8 @@ button:hover {
     padding: 50px 20px;
     text-align: center;
     color: white;
-    padding: 8rem;
-    height: 80svh;
+    padding: 6rem 2rem;
+    height: auto;
     border: 2rem solid black;
 }
 
@@ -356,7 +390,7 @@ button:hover {
     background: black;
     color: white;
     padding: 4rem 2rem;
-    height: 80svh;
+    height: auto;
     border: 2rem solid black;
     text-align: center;
     animation: fadeIn 1s ease-in-out;
@@ -425,4 +459,161 @@ footer {
     padding: 15px;
     font-size: 14px;
     border-top: 2rem solid black;
+}
+
+/* ============= Responsive ============= */
+@media (max-width: 1024px) {
+    nav ul {
+        width: 80%;
+        justify-content: center;
+    }
+
+    nav li {
+        font-size: 1.1rem;
+        padding: 0.75rem;
+    }
+
+    .about-item {
+        width: 33.33%;
+    }
+
+    .testimonials h2 {
+        margin-bottom: 4rem;
+    }
+}
+
+@media (max-width: 900px) {
+    .logo {
+        border-right: 1rem solid black;
+        border-left: 1rem solid black;
+        border-bottom: 1rem solid black;
+    }
+
+    .circle {
+        margin: 2.5rem 0;
+        outline-offset: 0.75rem;
+    }
+
+    nav {
+        position: sticky;
+        justify-content: space-between;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    nav ul {
+        width: 100%;
+        padding: 0.75rem 1rem 1rem;
+        flex-direction: column;
+        align-items: center;
+        display: none;
+        background: black;
+    }
+
+    nav li {
+        font-size: 1rem;
+        padding: 0.6rem;
+    }
+
+    .nav-toggle {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        align-self: flex-end;
+    }
+
+    nav ul.is-open {
+        display: flex;
+    }
+
+    .home,
+    .home-text {
+        height: 100vh;
+        min-height: 100vh;
+        min-height: 100dvh;
+    }
+
+    .home-text h1 {
+        font-size: 2rem;
+        text-align: center;
+        padding: 0 1rem;
+    }
+
+    .home-text p {
+        text-align: center;
+        padding: 0 1rem;
+    }
+
+    .about-item {
+        width: 100%;
+    }
+
+    .about-item img {
+        height: 22rem;
+    }
+
+    .testimonials {
+        padding: 4rem 1.5rem;
+        border: 1rem solid black;
+    }
+
+    .team {
+        padding: 3rem 1.5rem;
+        border: 1rem solid black;
+    }
+
+    .booking {
+        padding: 4rem 1.5rem;
+        border: 1rem solid black;
+    }
+
+    .faq {
+        padding: 3rem 1.5rem;
+        border: 1rem solid black;
+    }
+}
+
+@media (max-width: 480px) {
+    nav li {
+        font-size: 0.95rem;
+        padding: 0.5rem;
+    }
+
+    .home,
+    .home-text {
+        height: 100vh;
+        min-height: 100vh;
+        min-height: 100dvh;
+    }
+
+    .home-text h1 {
+        font-size: 1.6rem;
+    }
+
+    .testimonial-item {
+        margin-bottom: 2.5rem;
+    }
+
+    .booking form {
+        max-width: 100%;
+    }
+
+    .faq h2 {
+        font-size: 2rem;
+        margin-bottom: 3rem;
+    }
+}
+
+@media (max-width: 900px) {
+    .circle {
+        width: 160px;
+        height: 160px;
+    }
+}
+
+@media (max-width: 480px) {
+    .circle {
+        width: 120px;
+        height: 120px;
+    }
 }

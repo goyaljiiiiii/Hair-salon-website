@@ -13,7 +13,7 @@
         <meta name="author" content="Creative Inc.">
 
         <!-- Stylesheet -->
-        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="assets/css/style.css">
     </head>
 
     <body>
@@ -21,7 +21,12 @@
         <!-- Header Section -->
         <header>
             <nav>
-                <ul>
+                <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="primary-nav">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <ul id="primary-nav">
                     <li><a href="index.html">Home</a></li>
                     <li><a href="#about">About </a></li>
                     <li><a href="#testimonials">Testimonials</a></li>
@@ -31,7 +36,7 @@
                 </ul>
             </nav>
             <div class="logo">
-                <img src="logo.png" alt="Creative Inc. Logo - Hair Styling Experts" class="circle">
+                <img src="assets/images/logo.png" alt="Creative Inc. Logo - Hair Styling Experts" class="circle">
             </div>
         </header>
 
@@ -49,21 +54,21 @@
 
             <div class="about-grid">
                 <div class="about-item">
-                    <img src="hair1.jpg" alt="Professional Hair Styling Service">
+                    <img src="assets/images/hair1.jpg" alt="Professional Hair Styling Service">
                     <div class="text-overlay">
                         <h3>Hair Styling</h3>
                         <p>Trendy cuts and styles tailored to your face shape.</p>
                     </div>
                 </div>
                 <div class="about-item">
-                    <img src="hair2.jpeg" alt="Expert Hair Coloring">
+                    <img src="assets/images/hair2.jpeg" alt="Expert Hair Coloring">
                     <div class="text-overlay">
                         <h3>Hair Coloring</h3>
                         <p>Vibrant and natural shades using top-quality products.</p>
                     </div>
                 </div>
                 <div class="about-item">
-                    <img src="hair3.jpeg" alt="Hair Treatment for Healthy Hair">
+                    <img src="assets/images/hair3.jpeg" alt="Hair Treatment for Healthy Hair">
                     <div class="text-overlay">
                         <h3>Hair Treatment</h3>
                         <p>Strengthening and nourishing treatments for shiny, healthy hair.</p>
@@ -94,12 +99,12 @@
             </p>
             <div class="team-grid">
                 <div class="team-member">
-                    <img src="stylist.jpeg" alt="Alice - Senior Hair Stylist">
+                    <img src="assets/images/stylist.jpeg" alt="Alice - Senior Hair Stylist">
                     <h3>Alice</h3>
                     <p>Senior Stylist</p>
                 </div>
                 <div class="team-member">
-                    <img src="male.jpeg" alt="Michael - Expert Hair Colorist">
+                    <img src="assets/images/male.jpeg" alt="Michael - Expert Hair Colorist">
                     <h3>Michael</h3>
                     <p>Color Specialist</p>
                 </div>
@@ -139,6 +144,23 @@
         <footer>
             <p>&copy; 2024 Creative Inc. | Expert Hair Styling & Care | All Rights Reserved.</p>
         </footer>
+
+        <script>
+            const navToggle = document.querySelector(".nav-toggle");
+            const navList = document.querySelector("nav ul");
+
+            navToggle.addEventListener("click", () => {
+                const isOpen = navList.classList.toggle("is-open");
+                navToggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
+            });
+
+            navList.addEventListener("click", (event) => {
+                if (event.target.tagName === "A" && navList.classList.contains("is-open")) {
+                    navList.classList.remove("is-open");
+                    navToggle.setAttribute("aria-expanded", "false");
+                }
+            });
+        </script>
 
     </body>
 
