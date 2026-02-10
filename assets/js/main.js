@@ -14,3 +14,15 @@ if (navToggle && navList) {
         }
     });
 }
+
+// FAQ Toggle functionality for mobile and desktop
+const faqItems = document.querySelectorAll(".faq-item");
+
+faqItems.forEach(item => {
+    const heading = item.querySelector("h3");
+    if (heading) {
+        heading.addEventListener("click", () => {
+            item.classList.toggle("active");
+        });
+    }
+});

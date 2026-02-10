@@ -5,6 +5,19 @@
     scroll-behavior: smooth;
 }
 
+/* ============= Accessibility ============= */
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
 /* ============= Logo ============= */
 .logo {
     display: flex;
@@ -176,7 +189,6 @@ nav a {
 /* Image Animation */
 .about-item img {
     width: 100%;
-    height: 300px;
     object-fit: cover;
     border-radius: 10px;
     transition: transform 0.5s ease-in-out, filter 0.5s ease-in-out;
@@ -255,24 +267,10 @@ button:hover {
     }
 }
 
-/* ============= Scroll Effect ============= */
-.scroll-reveal {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-}
-
-.scroll-reveal.visible {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-
 /* ============= Testimonials Section ============= */
 .testimonials {
     background: radial-gradient(circle, #3b023b, black);
     color: white;
-    padding: 50px 20px;
     text-align: center;
     height: auto;
     padding: 6rem 2rem;
@@ -299,6 +297,14 @@ button:hover {
 
 .testimonial-item:hover {
     transform: translateY(-5px);
+}
+
+.testimonial-item cite {
+    display: block;
+    margin-top: 1rem;
+    font-style: normal;
+    font-weight: bold;
+    color: #ddd;
 }
 
 /* ============= Team Section ============= */
@@ -347,7 +353,6 @@ button:hover {
 /* ============= Booking Section ============= */
 .booking {
     background: linear-gradient(to bottom, black, #3b023b);
-    padding: 50px 20px;
     text-align: center;
     color: white;
     padding: 6rem 2rem;
@@ -417,6 +422,7 @@ button:hover {
     margin-bottom: 0.5rem;
     cursor: pointer;
     position: relative;
+    user-select: none;
 }
 
 .faq-item h3::before {
@@ -440,7 +446,7 @@ button:hover {
     line-height: 1.5;
 }
 
-.faq-item:hover p {
+.faq-item.active p {
     display: block;
 }
 

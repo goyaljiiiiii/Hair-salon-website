@@ -12,6 +12,18 @@
         <meta name="keywords" content="hair styling, hair coloring, hair treatment, salon, professional hair care">
         <meta name="author" content="Creative Inc.">
 
+        <!-- Open Graph / Social Media -->
+        <meta property="og:type" content="website">
+        <meta property="og:title" content="Creative Inc. - Professional Hair Styling & Care Services">
+        <meta property="og:description" content="Premium hair styling, coloring, and treatments for a flawless look. Book your appointment today!">
+        <meta property="og:url" content="https://goyaljiiiiii.github.io/Hair-salon-website/">
+        <meta property="og:site_name" content="Creative Inc.">
+
+        <!-- Twitter Card -->
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Creative Inc. - Professional Hair Styling & Care Services">
+        <meta name="twitter:description" content="Premium hair styling, coloring, and treatments for a flawless look.">
+
         <!-- Stylesheet -->
         <link rel="stylesheet" href="assets/css/style.css">
     </head>
@@ -39,6 +51,8 @@
                 <img src="assets/images/logo.png" alt="Creative Inc. Logo - Hair Styling Experts" class="circle">
             </div>
         </header>
+
+        <main>
 
         <!-- Hero Section -->
         <section class="home">
@@ -82,12 +96,14 @@
             <h2>What Our Clients Say</h2>
             <div class="testimonial-item">
                 <blockquote>
-                    <p>"Best hair service ever! My hair feels amazing." - <strong>Sarah L.</strong></p>
+                    <p>"Best hair service ever! My hair feels amazing."</p>
+                    <cite>Sarah L.</cite>
                 </blockquote>
             </div>
             <div class="testimonial-item">
                 <blockquote>
-                    <p>"Loved the new look. Highly recommended!" - <strong>John D.</strong></p>
+                    <p>"Loved the new look. Highly recommended!"</p>
+                    <cite>John D.</cite>
                 </blockquote>
             </div>
         </section>
@@ -116,9 +132,14 @@
             <h2>Book Your Appointment</h2>
             <p>Secure your spot with our expert stylists today.</p>
             <form action="https://formspree.io/f/mykdzgln" method="POST">
-                <input type="text" name="name" placeholder="Your Full Name" required>
-                <input type="email" name="email" placeholder="Your Email Address" required>
-                <input type="date" name="date" required>
+                <label for="name" class="visually-hidden">Full Name</label>
+                <input type="text" id="name" name="name" placeholder="Your Full Name" required>
+                <label for="email" class="visually-hidden">Email Address</label>
+                <input type="email" id="email" name="email" placeholder="Your Email Address" required>
+                <label for="phone" class="visually-hidden">Phone Number</label>
+                <input type="tel" id="phone" name="phone" placeholder="Your Phone Number" required>
+                <label for="date" class="visually-hidden">Appointment Date</label>
+                <input type="date" id="date" name="date" required>
                 <input type="hidden" name="_subject" value="New Booking Request">
                 <button type="submit">Book Now</button>
             </form>
@@ -140,6 +161,8 @@
                 <p>Absolutely! We offer free consultations to understand your hair needs better.</p>
             </div>
         </section>
+
+        </main>
 
         <!-- Footer Section -->
         <footer>
