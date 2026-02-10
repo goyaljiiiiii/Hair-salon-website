@@ -467,6 +467,14 @@ footer {
     border-top: 2rem solid black;
 }
 
+footer p {
+    margin: 0.5rem 0;
+}
+
+footer p:first-child {
+    font-weight: bold;
+}
+
 /* ============= Responsive ============= */
 @media (max-width: 1024px) {
     nav ul {
@@ -498,6 +506,8 @@ footer {
     .circle {
         margin: 2.5rem 0;
         outline-offset: 0.75rem;
+        width: 160px;
+        height: 160px;
     }
 
     nav {
@@ -585,6 +595,11 @@ footer {
         padding: 0.5rem;
     }
 
+    .circle {
+        width: 120px;
+        height: 120px;
+    }
+
     .home,
     .home-text {
         height: 100vh;
@@ -607,19 +622,5 @@ footer {
     .faq h2 {
         font-size: 2rem;
         margin-bottom: 3rem;
-    }
-}
-
-@media (max-width: 900px) {
-    .circle {
-        width: 160px;
-        height: 160px;
-    }
-}
-
-@media (max-width: 480px) {
-    .circle {
-        width: 120px;
-        height: 120px;
     }
 }
