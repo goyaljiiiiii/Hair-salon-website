@@ -162,8 +162,11 @@ async function initDb() {
         if (reviewsCount.count === 0) {
             await query.run(`
                 INSERT INTO reviews (name, rating, comment) VALUES
-                ('Sarah L.', 5, 'Maison de Beauté is the absolute benchmark of luxury hair care. My hair feels incredibly strong, shiny, and perfectly styled. The attention to detail is unmatched.'),
-                ('John D.', 5, 'The color specialist Michael completely transformed my hair with a natural, gorgeous balayage. I''ve received countless compliments since my visit! Worth every cent.')
+                ('Sarah Laurent', 5, 'Maison de Beauté is the absolute benchmark of luxury hair care. My hair feels incredibly strong, shiny, and perfectly styled. The attention to detail is unmatched.'),
+                ('Michael Vance', 5, 'The color specialist completely transformed my hair with a natural, gorgeous balayage. I''ve received endless compliments since my visit! Worth every cent.'),
+                ('Elena Rostova', 5, 'An extraordinary haute coiffure experience! The organic treatment revived my hair completely. The ambience and service are world-class.'),
+                ('Claire Dupont', 5, 'The precision cut and custom blow-dry were pure perfection. I won''t let anyone else touch my hair again!'),
+                ('Julian Moreau', 5, 'From the scalp spa treatment to the final styling, every second was pure relaxation and artistic mastery.')
             `);
             console.log('Database: Seeded default reviews.');
         }

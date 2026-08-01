@@ -355,6 +355,28 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    // Allow direct clicking on step indicators if previous steps are valid
+    stepIndicators.forEach((indicator, idx) => {
+        indicator.addEventListener("click", () => {
+            const targetStep = idx + 1;
+            if (targetStep === 2 && !serviceSelect.value) {
+                showModal(false, "Selection Missing", "Please select a styling service first.");
+                return;
+            }
+            if (targetStep === 3) {
+                if (!serviceSelect.value) {
+                    showModal(false, "Selection Missing", "Please select a styling service first.");
+                    return;
+                }
+                if (!stylistSelect.value || !dateInput.value || !timeHiddenInput.value) {
+                    showModal(false, "Selection Missing", "Please complete your stylist, date, and time slot selection.");
+                    return;
+                }
+            }
+            showStep(targetStep);
+        });
+    });
+
     // Step 1 Next Trigger
     const step1Next = document.getElementById("step1-next-btn");
     if (step1Next) {
@@ -410,8 +432,26 @@ document.addEventListener("DOMContentLoaded", () => {
             const date = dateInput.value;
             const time = timeHiddenInput.value;
 
+            if (!serviceId) {
+                showStep(1);
+                showModal(false, "Selection Missing", "Please select a styling service from Step 1 before booking.");
+                return;
+            }
+
+            if (!stylistId || !date) {
+                showStep(2);
+                showModal(false, "Selection Missing", "Please select both a stylist and an appointment date in Step 2.");
+                return;
+            }
+
             if (!time) {
-                showModal(false, "Time Slot Missing", "Please pick an available time slot before booking.");
+                showStep(2);
+                showModal(false, "Time Slot Missing", "Please pick an available time slot in Step 2 before booking.");
+                return;
+            }
+
+            if (!name || !email || !phone) {
+                showModal(false, "Details Missing", "Please enter your full name, email address, and phone number.");
                 return;
             }
 
@@ -566,13 +606,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 return card;
             };
 
-            // Render all reviews in the track
-            reviews.forEach(review => {
-                reviewsTrack.appendChild(createCardElement(review));
-            });
-
-            // Clone elements to create a seamless infinite scrolling loop if there are at least 3 reviews
-            if (reviews.length >= 3) {
+            // Render all reviews in the track and duplicate to ensure a seamless infinite scrolling loop
+            const totalLoops = Math.max(2, Math.ceil(10 / reviews.length));
+            for (let i = 0; i < totalLoops; i++) {
                 reviews.forEach(review => {
                     reviewsTrack.appendChild(createCardElement(review));
                 });
