@@ -3,9 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard - Maison de Beauté</title>
+    <title>Salon Admin Dashboard - Maison de Beauté</title>
     <link rel="icon" type="image/png" href="assets/images/logo.png">
     <link rel="apple-touch-icon" href="assets/images/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/admin.css">
 </head>
 <body>
@@ -14,10 +17,10 @@
     <header class="admin-header">
         <div class="brand">
             <h1>Maison de Beauté</h1>
-            <span>Salon Admin Panel</span>
+            <span>Salon Management & Analytics</span>
         </div>
         <div class="user-nav">
-            <span class="username" id="logged-admin-user">Logged in as admin</span>
+            <span class="user-badge" id="logged-admin-user">Logged in as admin</span>
             <button id="admin-logout-btn" class="logout-btn">Log Out</button>
         </div>
     </header>
@@ -28,24 +31,67 @@
         <!-- Metrics Panel -->
         <section class="metrics-grid">
             <div class="metric-card">
-                <h3>Total Bookings</h3>
+                <div class="metric-header">
+                    <div class="metric-icon icon-blue">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 4H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"></path><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                    </div>
+                    <span class="trend-badge trend-up">+14.2%</span>
+                </div>
                 <div class="number" id="metric-total">0</div>
-                <div class="description">All reservation entries in system</div>
+                <div class="metric-label">Total Appointments</div>
+                <div class="description">All reservation records</div>
             </div>
+
             <div class="metric-card">
-                <h3>Pending Approvals</h3>
+                <div class="metric-header">
+                    <div class="metric-icon icon-gold">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                    </div>
+                    <span class="trend-badge trend-warn">Requires Action</span>
+                </div>
                 <div class="number" id="metric-pending" style="color: var(--status-pending);">0</div>
-                <div class="description">Requires confirmation review</div>
+                <div class="metric-label">Pending Queue</div>
+                <div class="description">Awaiting staff confirmation</div>
             </div>
+
             <div class="metric-card">
-                <h3>Total Revenue</h3>
+                <div class="metric-header">
+                    <div class="metric-icon icon-green">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                    </div>
+                    <span class="trend-badge trend-up">Net Sales</span>
+                </div>
                 <div class="number" id="metric-revenue" style="color: var(--status-completed);">$0.00</div>
-                <div class="description">From completed appointments</div>
+                <div class="metric-label">Completed Revenue</div>
+                <div class="description">Collected from finished appointments</div>
             </div>
+
             <div class="metric-card">
-                <h3>Active Stylists</h3>
+                <div class="metric-header">
+                    <div class="metric-icon icon-purple">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                    </div>
+                    <span class="trend-badge trend-neutral">Active Staff</span>
+                </div>
                 <div class="number" id="metric-stylists">0</div>
-                <div class="description">Available salon staff members</div>
+                <div class="metric-label">Stylist Roster</div>
+                <div class="description">Available salon specialists</div>
+            </div>
+        </section>
+
+        <!-- Visual Analytics Chart Section -->
+        <section class="section-card analytics-section">
+            <div class="analytics-header">
+                <div>
+                    <h2>Revenue & Service Popularity</h2>
+                    <p class="section-subtitle">Real-time performance analytics by salon service category.</p>
+                </div>
+                <span class="badge-live">● LIVE METRICS</span>
+            </div>
+            <div class="chart-container" id="chart-container">
+                <div class="chart-bars" id="chart-bars">
+                    <!-- Javascript populates interactive SVG chart bars -->
+                </div>
             </div>
         </section>
 
@@ -59,22 +105,35 @@
         <!-- TAB 1: Bookings Management -->
         <section id="bookings-tab" class="tab-content active">
             <div class="section-card">
-                <h2>Customer Appointments</h2>
+                <div class="table-header-row">
+                    <div>
+                        <h2>Customer Appointments</h2>
+                        <p class="section-subtitle">Manage scheduling, update booking states, and inspect transaction details.</p>
+                    </div>
+                    <button class="export-csv-btn" id="export-csv-btn">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                        <span>Export CSV</span>
+                    </button>
+                </div>
                 
-                <!-- Filters Bar -->
+                <!-- Search & Filters Bar -->
                 <div class="filter-bar">
+                    <div class="search-box">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                        <input type="text" id="search-bookings-input" placeholder="Search customer, phone, email, or ID...">
+                    </div>
                     <div class="filter-group">
-                        <label for="filter-date">Filter Date</label>
+                        <label for="filter-date">Date</label>
                         <input type="date" id="filter-date">
                     </div>
                     <div class="filter-group">
-                        <label for="filter-stylist">Filter Stylist</label>
+                        <label for="filter-stylist">Stylist</label>
                         <select id="filter-stylist">
                             <option value="">All Stylists</option>
                         </select>
                     </div>
                     <div class="filter-group">
-                        <label for="filter-status">Filter Status</label>
+                        <label for="filter-status">Status</label>
                         <select id="filter-status">
                             <option value="">All Statuses</option>
                             <option value="pending">Pending</option>
@@ -90,22 +149,20 @@
                     <table>
                         <thead>
                             <tr>
-                                <th>Customer Info</th>
+                                <th>Ref / Customer</th>
                                 <th>Contact</th>
-                                <th>Service Selected</th>
+                                <th>Service</th>
                                 <th>Add-ons</th>
-                                <th>Promo Code</th>
-                                <th>Total Price</th>
+                                <th>Total</th>
                                 <th>Stylist</th>
-                                <th>Schedule Date/Time</th>
+                                <th>Date & Time</th>
                                 <th>Status</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody id="bookings-table-body">
-                            <!-- JS Dynamically Populates -->
                             <tr>
-                                <td colspan="10" style="text-align: center; color: #888; font-style: italic;">Loading appointments...</td>
+                                <td colspan="9" style="text-align: center; color: #888; font-style: italic; padding: 2rem;">Loading appointments...</td>
                             </tr>
                         </tbody>
                     </table>
@@ -114,22 +171,22 @@
 
             <!-- Stylist Commission Payouts Card -->
             <div class="section-card" style="margin-top: 2rem;">
-                <h2>Stylist Commission Payouts (50% Split)</h2>
-                <p style="color: var(--text-sub); margin-bottom: 1.5rem;">Commission payout estimates calculated from completed sessions.</p>
+                <h2>Stylist Commission Payouts (50% Revenue Split)</h2>
+                <p style="color: var(--text-sub); margin-bottom: 1.5rem;">Estimated commission payouts calculated from completed appointments.</p>
                 <div class="table-responsive">
                     <table>
                         <thead>
                             <tr>
                                 <th>Stylist Name</th>
                                 <th>Specialty</th>
-                                <th>Completed Bookings</th>
-                                <th>Total Services Sales</th>
+                                <th>Completed Sessions</th>
+                                <th>Gross Service Revenue</th>
                                 <th>Estimated Commission Payout</th>
                             </tr>
                         </thead>
                         <tbody id="commissions-table-body">
                             <tr>
-                                <td colspan="5" style="text-align: center; color: #888; font-style: italic;">Loading commissions report...</td>
+                                <td colspan="5" style="text-align: center; color: #888; font-style: italic; padding: 2rem;">Loading commissions report...</td>
                             </tr>
                         </tbody>
                     </table>
@@ -147,14 +204,14 @@
                     
                     <!-- Add Service Form -->
                     <form id="add-service-form" class="admin-form">
-                        <h3 style="font-size: 1rem; margin-bottom: 1rem; text-transform: uppercase; color: var(--purple-accent);">Add New Service</h3>
+                        <h3 style="font-size: 0.9rem; margin-bottom: 1rem; text-transform: uppercase; color: var(--purple-accent); font-weight: 700;">Add New Service</h3>
                         <div class="admin-form-group">
                             <label for="service-name">Service Name *</label>
-                            <input type="text" id="service-name" placeholder="e.g. Balayage Dye" required>
+                            <input type="text" id="service-name" placeholder="e.g. Balayage & Toning" required>
                         </div>
                         <div class="admin-form-group">
                             <label for="service-price">Price ($) *</label>
-                            <input type="number" id="service-price" step="0.01" min="0" placeholder="e.g. 150.00" required>
+                            <input type="number" id="service-price" step="0.01" min="0" placeholder="e.g. 165.00" required>
                         </div>
                         <div class="admin-form-group">
                             <label for="service-duration">Duration (Minutes) *</label>
@@ -162,7 +219,7 @@
                         </div>
                         <div class="admin-form-group">
                             <label for="service-desc">Description</label>
-                            <textarea id="service-desc" rows="2" placeholder="Brief service info..."></textarea>
+                            <textarea id="service-desc" rows="2" placeholder="Brief service information..."></textarea>
                         </div>
                         <button type="submit" class="admin-form-submit">Add Service</button>
                     </form>
@@ -174,22 +231,22 @@
 
                 <!-- Stylists Panel -->
                 <div class="section-card">
-                    <h2>Stylist Staff</h2>
+                    <h2>Stylist Roster</h2>
                     
                     <!-- Add Stylist Form -->
                     <form id="add-stylist-form" class="admin-form">
-                        <h3 style="font-size: 1rem; margin-bottom: 1rem; text-transform: uppercase; color: var(--purple-accent);">Add New Stylist</h3>
+                        <h3 style="font-size: 0.9rem; margin-bottom: 1rem; text-transform: uppercase; color: var(--purple-accent); font-weight: 700;">Add New Stylist</h3>
                         <div class="admin-form-group">
                             <label for="stylist-name">Full Name *</label>
-                            <input type="text" id="stylist-name" placeholder="e.g. Sarah Jenkins" required>
+                            <input type="text" id="stylist-name" placeholder="e.g. Elena Rostova" required>
                         </div>
                         <div class="admin-form-group">
                             <label for="stylist-specialty">Specialty *</label>
-                            <input type="text" id="stylist-specialty" placeholder="e.g. Hair Extensions" required>
+                            <input type="text" id="stylist-specialty" placeholder="e.g. Master Colorist" required>
                         </div>
                         <div class="admin-form-group">
                             <label for="stylist-image">Image Filename</label>
-                            <input type="text" id="stylist-image" placeholder="e.g. assets/images/stylist.jpeg" value="assets/images/logo.png">
+                            <input type="text" id="stylist-image" placeholder="assets/images/logo.png" value="assets/images/logo.png">
                         </div>
                         <button type="submit" class="admin-form-submit">Add Stylist</button>
                     </form>
@@ -205,8 +262,8 @@
         <!-- TAB 3: Settings -->
         <section id="settings-tab" class="tab-content">
             <div class="section-card password-card">
-                <h2>Administrative Credentials</h2>
-                <p style="color: var(--text-sub); font-size: 0.9rem; margin-bottom: 1.5rem;">For security, change your admin dashboard passcode regularly.</p>
+                <h2>Administrative Security & Credentials</h2>
+                <p style="color: var(--text-sub); font-size: 0.9rem; margin-bottom: 1.5rem;">Update password settings or inspect server configuration.</p>
                 
                 <form id="change-password-form" class="admin-form">
                     <div class="admin-form-group">
@@ -227,6 +284,13 @@
         </section>
 
     </main>
+
+    <!-- Modal Container -->
+    <div class="modal-overlay" id="modal-overlay">
+        <div class="modal-card" id="modal-card">
+            <!-- Dynamically populated receipt preview or confirm modal -->
+        </div>
+    </div>
 
     <!-- Toast Notification Container -->
     <div id="toast" class="notification-toast">Action Completed</div>

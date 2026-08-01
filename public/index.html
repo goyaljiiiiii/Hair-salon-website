@@ -50,7 +50,8 @@
                     <li><a href="#testimonials">Reviews</a></li>
                     <li><a href="#team">Stylists</a></li>
                     <li><a href="#booking">Book Now</a></li>
-                    <li><a href="#faq">FAQs</a></li>
+                    <li><a href="#" id="open-lookup-modal-btn" style="color: var(--gold); font-weight: 700;">🔍 Find Booking</a></li>
+                    <li><a href="login.html" style="background: rgba(192,132,252,0.15); padding: 4px 12px; border-radius: 20px; border: 1px solid rgba(192,132,252,0.3);">Staff Login</a></li>
                 </ul>
             </div>
         </nav>
@@ -584,6 +585,22 @@
         </svg>
         <span class="arrow">↑</span>
     </button>
+
+    <!-- Client Reservation Lookup Modal -->
+    <div class="modal-overlay" id="lookup-modal-overlay" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.8); backdrop-filter: blur(10px); z-index: 9999; display: none; justify-content: center; align-items: center; padding: 1.5rem;">
+        <div class="modal-card" style="background: #120216; border: 1px solid rgba(252,211,77,0.3); border-radius: 20px; max-width: 480px; width: 100%; padding: 2rem; color: white; position: relative; box-shadow: 0 20px 50px rgba(0,0,0,0.8), 0 0 30px rgba(252,211,77,0.15);">
+            <button class="close-modal-btn" id="close-lookup-modal-btn" style="position: absolute; top: 1rem; right: 1rem; background: rgba(255,255,255,0.1); border: none; color: #ccc; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; font-weight: bold;">&times;</button>
+            <h3 style="font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--gold); margin-bottom: 0.5rem; text-align: center;">Find Your Reservation</h3>
+            <p style="font-size: 0.85rem; color: #aaa; text-align: center; margin-bottom: 1.5rem;">Enter your Booking ID (#MDB-1), Email Address, or Phone Number below to track appointment status.</p>
+            
+            <form id="client-lookup-form" style="display: flex; gap: 8px; margin-bottom: 1.5rem;">
+                <input type="text" id="lookup-query-input" placeholder="e.g. #MDB-1 or alex@example.com" required style="flex: 1; padding: 0.8rem 1rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.2); border-radius: 10px; color: white; outline: none; font-size: 0.9rem;">
+                <button type="submit" style="padding: 0.8rem 1.2rem; background: linear-gradient(135deg, #d97706 0%, #b45309 100%); color: white; border: none; border-radius: 10px; font-weight: 700; cursor: pointer;">SEARCH</button>
+            </form>
+
+            <div id="lookup-results-container" style="max-height: 300px; overflow-y: auto;"></div>
+        </div>
+    </div>
 
     <script src="assets/js/main.js"></script>
 

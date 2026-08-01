@@ -3,159 +3,338 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Login - Maison de Beauté</title>
+    <title>Staff Portal - Maison de Beauté</title>
     <link rel="icon" type="image/png" href="assets/images/logo.png">
     <link rel="apple-touch-icon" href="assets/images/logo.png">
+
+    <!-- Fonts matching main site -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/style.css">
+
     <style>
         body {
+            min-height: 100vh;
+            min-height: 100dvh;
+            background-color: var(--bg-dark);
+            background-image: url('assets/images/bg.jpeg');
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+            display: flex;
+            flex-direction: column;
+            color: var(--text-light);
+            font-family: var(--font-sans);
+            position: relative;
+        }
+
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, rgba(18, 1, 20, 0.75) 0%, rgba(7, 0, 8, 0.95) 100%);
+            z-index: 1;
+        }
+
+        /* Top Brand Header */
+        .portal-header {
+            position: relative;
+            z-index: 2;
+            padding: 1.5rem 2.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-glass);
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(8px);
+        }
+
+        .portal-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .portal-logo img {
+            width: 36px;
+            height: 36px;
+            object-fit: contain;
+        }
+
+        .portal-logo span {
+            font-family: var(--font-serif);
+            font-size: 1.2rem;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            background: linear-gradient(135deg, #ffffff 40%, #edd0ed 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .return-link {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .return-link:hover {
+            color: var(--text-light);
+        }
+
+        /* Center Layout */
+        .portal-content {
+            position: relative;
+            z-index: 2;
+            flex: 1;
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
-            min-height: 100dvh;
-            background: radial-gradient(circle at center, #2e022e 0%, #000 100%);
-            font-family: system-ui, -apple-system, sans-serif;
-            color: white;
-            margin: 0;
-            padding: 1rem;
+            padding: 2rem 1.5rem;
         }
+
         .login-card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 16px;
-            padding: 3rem 2rem;
             width: 100%;
-            max-width: 400px;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5), 0 0 15px rgba(160, 32, 240, 0.2);
+            max-width: 420px;
+            background: rgba(18, 1, 20, 0.85);
+            border: 1px solid var(--border-gold);
+            border-radius: 16px;
+            padding: 3rem 2.5rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
             text-align: center;
         }
-        .login-card h2 {
-            font-size: 2rem;
-            margin-bottom: 0.5rem;
-            color: white;
-            letter-spacing: 1px;
+
+        .card-brand-subtitle {
+            font-size: 0.75rem;
+            font-weight: 800;
+            letter-spacing: 4px;
+            color: var(--gold);
             text-transform: uppercase;
+            margin-bottom: 0.4rem;
         }
-        .login-card p {
-            color: #aaa;
-            font-size: 0.95rem;
-            margin-bottom: 2rem;
+
+        .card-title {
+            font-family: var(--font-serif);
+            font-size: 2.2rem;
+            font-weight: 400;
+            color: var(--text-light);
+            margin-bottom: 0.5rem;
         }
+
+        .card-desc {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            margin-bottom: 2.2rem;
+        }
+
+        /* Form Controls */
         .form-group {
             margin-bottom: 1.5rem;
             text-align: left;
         }
+
         .form-group label {
             display: block;
-            font-size: 0.85rem;
-            color: #ddd;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            color: var(--text-muted);
+            text-transform: uppercase;
             margin-bottom: 0.5rem;
-            font-weight: 600;
         }
-        .form-group input {
+
+        .input-row {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-row input {
             width: 100%;
-            padding: 0.85rem;
+            padding: 0.85rem 1rem;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border-glass);
             border-radius: 8px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            background: rgba(255, 255, 255, 0.05);
-            color: white;
-            font-size: 1rem;
+            color: var(--text-light);
+            font-size: 0.95rem;
             outline: none;
             transition: all 0.3s;
         }
-        .form-group input:focus {
-            border-color: #a020f0;
-            background: rgba(255, 255, 255, 0.1);
-            box-shadow: 0 0 8px rgba(160, 32, 240, 0.4);
+
+        .input-row input:focus {
+            border-color: var(--primary);
+            background: rgba(255, 255, 255, 0.07);
+            box-shadow: 0 0 12px rgba(192, 132, 252, 0.2);
         }
-        .login-btn {
+
+        .pwd-toggle-btn {
+            position: absolute;
+            right: 0.8rem;
+            background: none;
+            border: none;
+            color: var(--primary);
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            cursor: pointer;
+            padding: 2px 6px;
+            transition: color 0.2s;
+        }
+
+        .pwd-toggle-btn:hover {
+            color: var(--text-light);
+        }
+
+        /* Submit Button */
+        .submit-btn {
             width: 100%;
-            padding: 0.9rem;
-            background: purple;
-            color: white;
+            padding: 0.95rem;
+            margin-top: 0.5rem;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-hover) 100%);
+            color: var(--text-light);
             border: none;
             border-radius: 8px;
-            font-size: 1.1rem;
-            font-weight: bold;
+            font-weight: 700;
+            font-size: 0.95rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
             cursor: pointer;
-            transition: all 0.3s;
-            margin-top: 1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(168, 85, 247, 0.3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
         }
-        .login-btn:hover {
-            background: #a020f0;
-            box-shadow: 0 0 15px rgba(160, 32, 240, 0.6);
-            transform: translateY(-2px);
+
+        .submit-btn:hover {
+            background: linear-gradient(135deg, #d8b4fe 0%, var(--primary) 100%);
+            box-shadow: 0 6px 20px rgba(192, 132, 252, 0.4);
+            transform: translateY(-1px);
         }
+
+        /* Error Box */
         .error-message {
-            color: #ff4a4a;
-            font-size: 0.9rem;
-            margin-top: 1rem;
-            min-height: 20px;
             display: none;
-            background: rgba(255, 74, 74, 0.1);
-            padding: 8px;
-            border-radius: 6px;
-            border: 1px solid rgba(255, 74, 74, 0.2);
+            margin-top: 1.2rem;
+            padding: 0.75rem 1rem;
+            background: rgba(248, 113, 113, 0.12);
+            border: 1px solid rgba(248, 113, 113, 0.3);
+            border-radius: 8px;
+            color: #f87171;
+            font-size: 0.85rem;
+            text-align: left;
         }
-        .back-link {
-            display: inline-block;
+
+        /* Subtle Demo Bar */
+        .demo-bar {
             margin-top: 2rem;
-            color: #ccc;
-            text-decoration: none;
-            font-size: 0.9rem;
-            transition: color 0.3s;
+            padding-top: 1.2rem;
+            border-top: 1px solid var(--border-glass);
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
-        .back-link:hover {
-            color: white;
+
+        .demo-bar code {
+            color: var(--gold);
+            font-family: inherit;
+            font-weight: 600;
+        }
+
+        .auto-fill-link {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 700;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .auto-fill-link:hover {
+            color: var(--text-light);
+            text-decoration: underline;
         }
     </style>
 </head>
 <body>
 
-    <div class="login-card">
-        <h2>Maison de Beauté</h2>
-        <p>Salon Administration Portal</p>
-        
-        <!-- Showcase Demo Credentials -->
-        <div style="background: rgba(252,211,77,0.08); border: 1px solid rgba(252, 211, 77, 0.25); padding: 1rem; border-radius: 10px; font-size: 0.85rem; color: #fcd34d; margin-bottom: 2rem; text-align: left; line-height: 1.5; backdrop-filter: blur(5px);">
-            <div style="font-weight: 700; margin-bottom: 0.4rem; display: flex; align-items: center; gap: 6px;">
-                <span style="font-size: 1rem;">✨</span> Showcase Demo Portal:
-            </div>
-            Username: <code style="background: rgba(0,0,0,0.4); padding: 2px 5px; border-radius: 4px; font-family: monospace; font-size: 0.9rem; color: white; border: 1px solid rgba(255,255,255,0.1);">admin</code><br>
-            Password: <code style="background: rgba(0,0,0,0.4); padding: 2px 5px; border-radius: 4px; font-family: monospace; font-size: 0.9rem; color: white; border: 1px solid rgba(255,255,255,0.1);">Password123</code><br>
-            <div style="font-size: 0.75rem; opacity: 0.85; margin-top: 0.5rem; border-top: 1px solid rgba(252,211,77,0.15); padding-top: 0.4rem;">
-                Note: Administrative database edits are disabled in Demo Mode to protect the showcase.
+    <!-- Header Navigation -->
+    <header class="portal-header">
+        <a href="/" class="portal-logo">
+            <img src="assets/images/logo.png" alt="Maison de Beauté Logo">
+            <span>MAISON DE BEAUTÉ</span>
+        </a>
+        <a href="/" class="return-link">← Return to Main Site</a>
+    </header>
+
+    <!-- Main Content -->
+    <main class="portal-content">
+        <div class="login-card">
+            <p class="card-brand-subtitle">Maison de Beauté</p>
+            <h1 class="card-title">Staff Portal</h1>
+            <p class="card-desc">Sign in with your administrative account to manage appointments and schedule rosters.</p>
+
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <div class="input-row">
+                        <input type="text" id="username" name="username" placeholder="Enter staff username" required autocomplete="username">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <div class="input-row">
+                        <input type="password" id="password" name="password" placeholder="Enter password" required autocomplete="current-password">
+                        <button type="button" id="toggle-password-btn" class="pwd-toggle-btn">SHOW</button>
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-btn" id="submit-btn">Sign In</button>
+
+                <div id="error-box" class="error-message"></div>
+            </form>
+
+            <div class="demo-bar">
+                <span>Demo: <code>admin</code> / <code>Password123</code></span>
+                <a href="#" id="quick-demo-link" class="auto-fill-link">Auto-Fill</a>
             </div>
         </div>
-        
-        <form id="login-form">
-            <div class="form-group">
-                <label for="username">USERNAME</label>
-                <input type="text" id="username" name="username" placeholder="Enter admin username" required autocomplete="username">
-            </div>
-            
-            <div class="form-group">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
-                    <label for="password" style="margin-bottom: 0;">PASSWORD</label>
-                    <button type="button" id="toggle-password-btn" style="background: none; border: none; color: #a855f7; font-size: 0.8rem; font-weight: 700; cursor: pointer; padding: 0; outline: none; transition: color 0.2s;">SHOW</button>
-                </div>
-                <input type="password" id="password" name="password" placeholder="Enter account password" required autocomplete="current-password">
-            </div>
-            
-            <button type="submit" class="login-btn">LOG IN</button>
-            <div id="error-box" class="error-message"></div>
-        </form>
-        
-        <a href="/" class="back-link">← Return to Main Site</a>
-    </div>
+    </main>
 
     <script>
-        // Show/Hide Password Toggle Logic
-        const togglePasswordBtn = document.getElementById("toggle-password-btn");
+        const usernameInput = document.getElementById("username");
         const passwordInput = document.getElementById("password");
+        const quickDemoLink = document.getElementById("quick-demo-link");
+        const togglePasswordBtn = document.getElementById("toggle-password-btn");
+        const loginForm = document.getElementById("login-form");
+        const submitBtn = document.getElementById("submit-btn");
+        const errorBox = document.getElementById("error-box");
+
+        // Auto-fill link handler
+        if (quickDemoLink) {
+            quickDemoLink.addEventListener("click", (e) => {
+                e.preventDefault();
+                usernameInput.value = "admin";
+                passwordInput.value = "Password123";
+                usernameInput.focus();
+            });
+        }
+
+        // Show/Hide password handler
         if (togglePasswordBtn && passwordInput) {
             togglePasswordBtn.addEventListener("click", () => {
                 if (passwordInput.type === "password") {
@@ -168,14 +347,16 @@
             });
         }
 
-        document.getElementById("login-form").addEventListener("submit", async (e) => {
+        // Login submit handler
+        loginForm.addEventListener("submit", async (e) => {
             e.preventDefault();
-            const username = document.getElementById("username").value.trim();
-            const password = document.getElementById("password").value;
-            const errorBox = document.getElementById("error-box");
-            
+            const username = usernameInput.value.trim();
+            const password = passwordInput.value;
+
             errorBox.style.display = "none";
             errorBox.textContent = "";
+            submitBtn.disabled = true;
+            submitBtn.textContent = "AUTHENTICATING...";
 
             try {
                 const response = await fetch("/api/admin/login", {
@@ -183,24 +364,28 @@
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ username, password })
                 });
-                
+
                 const data = await response.json();
-                
+
                 if (response.ok) {
-                    // Redirect to the dashboard
+                    submitBtn.textContent = "REDIRECTING...";
                     window.location.href = "admin.html";
                 } else {
-                    errorBox.textContent = data.error || "Login failed. Please check credentials.";
+                    errorBox.textContent = data.error || "Invalid credentials.";
                     errorBox.style.display = "block";
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = "SIGN IN";
                 }
             } catch (err) {
                 console.error("Login request failed:", err);
                 errorBox.textContent = "Unable to connect to server. Please try again.";
                 errorBox.style.display = "block";
+                submitBtn.disabled = false;
+                submitBtn.textContent = "SIGN IN";
             }
         });
 
-        // Auto redirect if already logged in
+        // Auto redirect if already authenticated
         (async () => {
             try {
                 const res = await fetch("/api/admin/status");

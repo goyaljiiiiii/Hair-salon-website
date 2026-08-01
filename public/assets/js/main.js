@@ -1056,6 +1056,76 @@ document.addEventListener("DOMContentLoaded", () => {
         };
     }
 
+    // ==========================================
+    // CLIENT RESERVATION LOOKUP MODAL
+    // ==========================================
+    const openLookupModalBtn = document.getElementById("open-lookup-modal-btn");
+    const closeLookupModalBtn = document.getElementById("close-lookup-modal-btn");
+    const lookupModalOverlay = document.getElementById("lookup-modal-overlay");
+    const clientLookupForm = document.getElementById("client-lookup-form");
+    const lookupQueryInput = document.getElementById("lookup-query-input");
+    const lookupResultsContainer = document.getElementById("lookup-results-container");
+
+    if (openLookupModalBtn && lookupModalOverlay) {
+        openLookupModalBtn.addEventListener("click", (e) => {
+            e.preventDefault();
+            lookupModalOverlay.style.display = "flex";
+            if (lookupQueryInput) lookupQueryInput.focus();
+        });
+    }
+
+    if (closeLookupModalBtn && lookupModalOverlay) {
+        closeLookupModalBtn.addEventListener("click", () => {
+            lookupModalOverlay.style.display = "none";
+        });
+    }
+
+    if (lookupModalOverlay) {
+        lookupModalOverlay.addEventListener("click", (e) => {
+            if (e.target === lookupModalOverlay) lookupModalOverlay.style.display = "none";
+        });
+    }
+
+    if (clientLookupForm) {
+        clientLookupForm.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const q = lookupQueryInput.value.trim();
+            if (!q) return;
+
+            lookupResultsContainer.innerHTML = '<p style="color: #ccc; font-style: italic; text-align: center; padding: 1rem;">Searching system records...</p>';
+
+            try {
+                const res = await fetch(`/api/bookings/lookup?q=${encodeURIComponent(q)}`);
+                const data = await res.json();
+
+                if (res.ok && data.bookings && data.bookings.length > 0) {
+                    lookupResultsContainer.innerHTML = "";
+                    data.bookings.forEach(b => {
+                        const card = document.createElement("div");
+                        card.style.cssText = "background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 1rem; margin-bottom: 0.8rem;";
+                        
+                        const statusColor = b.status === 'completed' ? '#34d399' : (b.status === 'confirmed' ? '#60a5fa' : (b.status === 'pending' ? '#fcd34d' : '#f87171'));
+
+                        card.innerHTML = `
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                                <span style="font-weight: 700; color: #fcd34d; font-size: 0.85rem;">#MDB-${b.id}</span>
+                                <span style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; padding: 3px 8px; border-radius: 12px; background: rgba(255,255,255,0.1); color: ${statusColor}; border: 1px solid ${statusColor};">${b.status}</span>
+                            </div>
+                            <div style="font-weight: 700; font-size: 1rem; color: white;">${b.service_name}</div>
+                            <div style="font-size: 0.85rem; color: #aaa; margin: 4px 0;">Stylist: ${b.stylist_name} &bull; ${b.booking_date} @ ${b.booking_time}</div>
+                            <div style="font-size: 0.85rem; color: #ddd; font-weight: 600;">Total Paid: $${b.total_price.toFixed(2)}</div>
+                        `;
+                        lookupResultsContainer.appendChild(card);
+                    });
+                } else {
+                    lookupResultsContainer.innerHTML = `<p style="color: #fca5a5; font-size: 0.9rem; text-align: center; padding: 1rem;">${data.error || 'No matching reservation found.'}</p>`;
+                }
+            } catch (err) {
+                lookupResultsContainer.innerHTML = '<p style="color: #fca5a5; font-size: 0.9rem; text-align: center; padding: 1rem;">Unable to complete search. Please try again.</p>';
+            }
+        });
+    }
+
     // Run Initial Load
     loadFormCatalogs();
     loadTeam(); // Load team stylists dynamically on load

@@ -174,6 +174,38 @@ app.post('/api/bookings', async (req, res) => {
     }
 });
 
+// Lookup booking status by Email, Phone, or Booking ID (Public Client Lookup)
+app.get('/api/bookings/lookup', async (req, res) => {
+    const { q } = req.query;
+    if (!q || !q.trim()) {
+        return res.status(400).json({ error: 'Search query parameter (q) is required.' });
+    }
+
+    const searchTerm = q.trim();
+    let numericId = parseInt(searchTerm.replace(/[^0-9]/g, ''), 10);
+
+    try {
+        const bookings = await query.all(
+            `SELECT b.*, s.name as service_name, s.price as service_price, t.name as stylist_name 
+             FROM bookings b
+             JOIN services s ON b.service_id = s.id
+             JOIN stylists t ON b.stylist_id = t.id
+             WHERE b.id = ? OR LOWER(b.customer_email) = LOWER(?) OR b.customer_phone LIKE ?
+             ORDER BY b.booking_date DESC, b.booking_time DESC`,
+            [isNaN(numericId) ? -1 : numericId, searchTerm, `%${searchTerm}%`]
+        );
+
+        if (!bookings || bookings.length === 0) {
+            return res.status(404).json({ error: 'No reservation found matching your query.' });
+        }
+
+        res.json({ success: true, bookings });
+    } catch (err) {
+        console.error('Lookup error:', err);
+        res.status(500).json({ error: 'Failed to search for booking.' });
+    }
+});
+
 
 // ==========================================
 // ADMIN APIS (SECURE)
@@ -240,6 +272,42 @@ app.get('/api/admin/bookings', requireAdmin, async (req, res) => {
     } catch (err) {
         console.error('Error fetching admin bookings:', err);
         res.status(500).json({ error: 'Failed to fetch bookings.' });
+    }
+});
+
+// Admin Analytics Overview (Counts, Status Breakdowns, Popular Services)
+app.get('/api/admin/analytics', requireAdmin, async (req, res) => {
+    try {
+        const statusBreakdown = await query.all(
+            `SELECT status, COUNT(*) as count FROM bookings GROUP BY status`
+        );
+
+        const popularServices = await query.all(
+            `SELECT s.name, COUNT(b.id) as total_bookings, SUM(CASE WHEN b.status = 'completed' THEN b.total_price ELSE 0 END) as revenue 
+             FROM services s 
+             LEFT JOIN bookings b ON s.id = b.service_id 
+             GROUP BY s.id 
+             ORDER BY total_bookings DESC`
+        );
+
+        const totalRevenueResult = await query.get(
+            `SELECT SUM(total_price) as total FROM bookings WHERE status = 'completed'`
+        );
+
+        const totalBookingsResult = await query.get(
+            `SELECT COUNT(*) as count FROM bookings`
+        );
+
+        res.json({
+            success: true,
+            statusBreakdown,
+            popularServices,
+            totalRevenue: totalRevenueResult?.total || 0,
+            totalBookings: totalBookingsResult?.count || 0
+        });
+    } catch (err) {
+        console.error('Error fetching analytics:', err);
+        res.status(500).json({ error: 'Failed to fetch analytics.' });
     }
 });
 
